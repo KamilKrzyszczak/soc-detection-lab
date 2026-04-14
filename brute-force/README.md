@@ -97,6 +97,12 @@ The screenshots below present evidence of the brute force attack and its success
 
 ---
 
-## 💬 Interview Ready Statement
+### 🧠 Analysis Summary
 
-"I simulated a brute force attack using Hydra and detected it by correlating multiple failed logins (Event ID 4625) followed by a successful login (Event ID 4624), indicating a potential account compromise."
+The screenshots confirm a brute force attack pattern:
+
+- Multiple failed logins (Event ID 4625) from the same source IP
+- Followed by a successful login (Event ID 4624)
+- Logon Type 3 confirms remote network authentication (RDP)
+
+This behavior is consistent with credential brute force attacks leading to account compromise.
