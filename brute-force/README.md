@@ -50,8 +50,9 @@ Brute force attack is identified when:
 
 ## 🔎 Investigation Findings
 
-* Source IP: 192.168.56.101
+* Source IP: 192.168.56.101 (Kali Linux)
 * Target account: labuser
+* Logon Type: 3 (network logon via RDP)
 * Attack method: password brute force (Hydra)
 * Outcome: successful login
 
