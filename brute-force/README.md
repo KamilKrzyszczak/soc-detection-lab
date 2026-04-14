@@ -39,12 +39,12 @@ This indicates:
 ---
 
 ## 🧠 Detection Logic
-
 Brute force attack is identified when:
 
-* High number of Event ID 4625 from same IP
-* Followed by Event ID 4624
-* Within short timeframe
+- High number of Event ID 4625 from same IP
+- Multiple failed logins within short timeframe (seconds/minutes)
+- Followed by Event ID 4624 for the same account
+- Logon Type 3 (network logon, typical for RDP attacks)
 
 ---
 
