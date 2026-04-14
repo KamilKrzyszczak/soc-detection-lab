@@ -70,6 +70,32 @@ Recommended actions:
 
 ---
 
+## 📸 Evidence
+
+The screenshots below present evidence of the brute force attack and its successful detection.
+
+### Brute Force Attack (Hydra)
+
+![Hydra Attack](screenshots/hydra_attack.png)
+
+### Failed Logins – Event ID 4625
+
+![4625 Failed](screenshots/event_4625_failed.png)
+
+### Failed Log Details
+
+![4625 Details](screenshots/event_4625_details.png)
+
+### Successful Logon – Event ID 4624
+
+![4624 Success](screenshots/event_4624_success.png)
+
+### Successful Log Details
+
+![4624 Details](screenshots/event_4624_details.png)
+
+---
+
 ## 💬 Interview Ready Statement
 
 "I simulated a brute force attack using Hydra and detected it by correlating multiple failed logins (Event ID 4625) followed by a successful login (Event ID 4624), indicating a potential account compromise."
