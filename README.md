@@ -1,79 +1,99 @@
 # 🔐 SOC Detection Lab
 
-Hands-on cybersecurity project focused on detecting and analyzing real-world attacks using Windows Event Logs, Sysmon, and SIEM tools (Splunk).
+Hands-on cybersecurity project focused on detecting and analyzing real-world attack scenarios using Windows Event Logs, Sysmon, and SIEM tools (Splunk).
 
 ---
 
 ## 🎯 Objective
 
-Build a practical SOC environment and simulate real-world attacks to detect, analyze, investigate, and respond like a Security Operations Center (SOC) analyst.
+Build a practical SOC environment to simulate real-world attacks and develop detection, investigation, and response capabilities similar to a Security Operations Center (SOC) analyst.
 
 ---
 
 ## 🧱 Lab Environment
 
-- Windows (victim machine with Sysmon)
-- Kali Linux (attacker)
-- Sysmon (advanced endpoint logging)
-- Splunk (SIEM for log analysis and correlation)
-- VirtualBox
+* Windows (victim machine with Sysmon)
+* Kali Linux (attacker machine)
+* Sysmon (enhanced endpoint visibility)
+* Splunk (SIEM for log analysis and correlation)
+* VirtualBox (lab environment)
 
 ---
 
 ## 💣 Attack Scenarios
 
 ### 1. Brute Force Attack
-- RDP login attempts from Kali Linux
-- Multiple failed login attempts (brute force pattern)
-- Detection via Event ID 4625 (failed logon) and Event ID 4624 (successful logon)
-- Correlation of failed and successful logins
+
+* RDP login attempts from Kali Linux
+* Multiple failed login attempts (brute force pattern)
+* Detection using:
+  * Event ID 4625 (failed logon)
+  * Event ID 4624 (successful logon)
+* Correlation of failed and successful authentication events
+* Identification of potential account compromise
 
 ---
 
 ### 2. Suspicious PowerShell Activity
-- Execution of encoded or obfuscated PowerShell commands
-- Detection via Script Block Logging (Event ID 4104)
-- Identification of suspicious keywords (e.g. IEX, DownloadString, -enc, -nop)
+
+* Execution of potentially malicious PowerShell commands
+* Detection using:
+  * Script Block Logging (Event ID 4104)
+* Indicators:
+  * Use of `IEX` (Invoke-Expression)
+  * Use of `DownloadString`
+  * External URL references
+  * Obfuscation flags (e.g. `-enc`, `-nop`)
+* Visibility into command execution and script content
 
 ---
 
 ### 3. Reverse Shell
-- Outbound connection from victim machine to attacker
-- Detection via unusual network connections and process behavior
-- Identification of suspicious parent-child process relationships
+
+* Outbound connection from victim to attacker
+* Detection using:
+  * Sysmon Event ID 3 (network connection)
+  * Sysmon Event ID 1 (process creation)
+* Indicators:
+  * PowerShell spawning outbound connection
+  * Unusual destination IP and port
+  * Suspicious command line execution
+* Correlation between process activity and network behavior
 
 ---
 
-### 4. Malware Analysis
-- Detection of suspicious processes (e.g. masquerading)
-- Analysis of ransomware-like behavior
-- Extraction of Indicators of Compromise (IOCs) such as:
-  - Suspicious file paths (e.g. AppData)
-  - Unusual process names
-  - Network indicators (IP / URL)
+### 4. Malware Analysis (Planned)
+
+* Detection of suspicious or masquerading processes
+* Analysis of ransomware-like behavior patterns
+* Extraction of Indicators of Compromise (IOCs):
+  * Suspicious file paths (e.g. AppData)
+  * Unusual process names
+  * Network indicators (IP / URL)
 
 ---
 
 ## 🧠 Detection Approach
 
-- Log analysis (Windows Event Logs, Sysmon)
-- SIEM correlation (Splunk)
-- Behavioral detection (not only signature-based)
-- Correlation of multiple events to identify attack patterns
-- Identification of suspicious activity and anomalies
+* Log analysis (Windows Event Logs, Sysmon)
+* SIEM correlation (Splunk)
+* Behavioral detection (beyond signature-based)
+* Correlation of multiple events across different sources
+* Identification of anomalies and attacker techniques
 
 ---
 
 ## 📊 Skills Demonstrated
 
-- Log analysis & threat detection
-- Incident investigation & triage
-- Malware analysis fundamentals
-- SIEM usage (Splunk)
-- Understanding attacker behavior (TTPs)
+* Log analysis & threat detection
+* Incident investigation & triage
+* Endpoint telemetry analysis (Sysmon)
+* SIEM usage (Splunk)
+* Understanding attacker behavior (TTPs)
+* Detection engineering fundamentals
 
 ---
 
 ## 🚀 Status
 
-🛠️ In progress – actively building, testing, and improving detection scenarios based on real-world attack techniques.
+🛠️ In progress — continuously expanding detection scenarios and improving analysis based on real-world attack techniques.
