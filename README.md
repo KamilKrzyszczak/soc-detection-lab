@@ -94,6 +94,46 @@ Build a practical SOC environment to simulate real-world attacks and develop det
 
 ---
 
-## 🚀 Status
+## 🚀 Future Improvements
 
-🛠️ In progress — continuously expanding detection scenarios and improving analysis based on real-world attack techniques.
+### 🛡️ Detection Engineering
+- Develop custom detection rules (Sigma / Splunk queries) for each attack scenario
+- Improve alert logic to reduce false positives
+- Correlate multi-stage attacks (e.g. PowerShell → reverse shell → persistence)
+
+### 🔄 Persistence Techniques
+- Simulate attacker persistence:
+  - Scheduled Tasks
+  - Registry Run Keys
+  - Startup folder
+- Detect persistence using:
+  - Sysmon Event ID 1 (process creation)
+  - Sysmon Event ID 13 (registry changes)
+
+### 🧠 Advanced PowerShell Detection
+- Analyze encoded and obfuscated PowerShell commands (`-EncodedCommand`)
+- Detect fileless attacks using Script Block Logging (Event ID 4104)
+- Identify suspicious parent-child process relationships
+
+### 🌐 SIEM & Automation
+- Build dashboards in Splunk for attack visibility
+- Create alerts for:
+  - Brute force attempts
+  - Reverse shell connections
+  - Suspicious PowerShell activity
+- Automate log correlation and alerting workflows
+
+### 🧪 Additional Attack Scenarios
+- Persistence & privilege escalation techniques
+- Basic lateral movement simulation
+- Data exfiltration scenarios
+
+### 📄 Incident Response
+- Create full incident reports (PDF format)
+- Document attack timeline and analysis steps
+- Map techniques to MITRE ATT&CK framework
+
+### 📈 Lab Expansion
+- Integrate Wazuh for endpoint detection
+- Add more endpoints (multi-host environment)
+- Simulate enterprise-like network structure
