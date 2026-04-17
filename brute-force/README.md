@@ -93,11 +93,20 @@ EventCode=4624
 
 ## 📸 Evidence
 
-![Brute Force Attack](screenshots/brute-force_attack.png)
+### Brute Force Attack (Hydra)
+![Brute Force](screenshots/hydra_attack.png)
 
-![Failed Logons](screenshots/event_id_4625.png)
+### Failed Logons (Event ID 4625)
+![4625 Failed](screenshots/event_4625_failed.png)
 
-![Successful Logon](screenshots/event_id_4624.png)
+### Failed Logon Details
+![4625 Details](screenshots/event_4625_details.png)
+
+### Successful Logon (Event ID 4624)
+![4624 Success](screenshots/event_4624_success.png)
+
+### Successful Logon Details
+![4624 Details](screenshots/event_4624_details.png)
 
 ---
 
