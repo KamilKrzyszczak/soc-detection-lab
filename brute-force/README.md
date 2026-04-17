@@ -1,108 +1,115 @@
-# 🚨 Brute Force Attack Detection
+# 🔐 Brute Force Attack Detection
 
-## 📌 Scenario
+Detection of brute force attack attempts against RDP using Windows Security Logs and log correlation.
 
-Simulated brute force attack on RDP service from Kali Linux using Hydra tool.
+---
+
+## 🎯 Objective
+
+Simulate a brute force attack on RDP and detect it using failed and successful authentication events.
 
 ---
 
 ## ⚔️ Attack Simulation
 
-* Tool: Hydra
-* Target: Windows machine (RDP)
-* Attacker IP: 192.168.56.101
-* Victim IP: 192.168.56.102
+- Tool: Hydra
+- Attacker: Kali Linux
+- Victim: Windows (RDP enabled)
+
+### Steps:
+
+1. Attacker performs brute force attack using Hydra
+2. Multiple failed login attempts are generated
+3. Eventually a successful login occurs
 
 ---
 
 ## 📊 Logs Analysis
 
-### Failed Logons (Event ID 4625)
+### Windows Security Event ID 4625 – Failed Logon
 
-Multiple failed login attempts detected from a single source IP.
+- Multiple failed authentication attempts
+- Same source IP
+- High frequency of events
 
-Key indicators:
-
-* Repeated authentication failures
-* Same username attempts
-* Short time interval between attempts
-
----
-
-### Successful Logon (Event ID 4624)
-
-After multiple failures, successful authentication occurred.
-
-This indicates:
-➡️ Possible password compromise
+**Why suspicious:**
+Repeated login failures indicate password guessing attack
 
 ---
 
-## 🧠 Detection Logic
+### Windows Security Event ID 4624 – Successful Logon
+
+- Successful authentication after multiple failures
+- Same source IP as failed attempts
+
+**Why suspicious:**
+Possible account compromise after brute force
+
+---
+
+## 🚨 Detection Logic
+
 Brute force attack is identified when:
 
-- High number of Event ID 4625 from same IP
-- Multiple failed logins within short timeframe (seconds/minutes)
-- Followed by Event ID 4624 for the same account
-- Logon Type 3 (network logon, typical for RDP attacks)
+- High number of Event ID 4625 in short time
+- Same source IP across attempts
+- Followed by Event ID 4624 success
 
 ---
 
 ## 🔎 Investigation Findings
 
-* Source IP: 192.168.56.101 (Kali Linux)
-* Target account: labuser
-* Logon Type: 3 (network logon via RDP)
-* Attack method: password brute force (Hydra)
-* Outcome: successful login
+- Source IP: 192.168.56.101 (Kali)
+- Target account: labuser
+- Attack type: RDP brute force
+
+**Indicators:**
+- Multiple failed logins  
+- Same username attempts  
+- Successful login after failures  
+
+**Outcome:**
+Unauthorized access gained
 
 ---
 
-## 🚨 Conclusion
+## 🧬 MITRE ATT&CK Mapping
 
-Detected brute force attack leading to account compromise.
+- **T1110** – Brute Force  
 
-Recommended actions:
+---
 
-* Block source IP
-* Reset compromised credentials
-* Enable account lockout policy
-* Monitor similar patterns
+## 🔎 Detection Queries (Splunk)
+
+### Failed Logons
+
+EventCode=4625
+
+### Successful Logon After Failures
+
+EventCode=4624
 
 ---
 
 ## 📸 Evidence
 
-The screenshots below present evidence of the brute force attack and its successful detection.
+![Brute Force Attack](screenshots/brute-force_attack.png)
 
-### Brute Force Attack (Hydra)
+![Failed Logons](screenshots/event_id_4625.png)
 
-![Hydra Attack](screenshots/hydra_attack.png)
-
-### Failed Logins – Event ID 4625
-
-![4625 Failed](screenshots/event_4625_failed.png)
-
-### Failed Log Details
-
-![4625 Details](screenshots/event_4625_details.png)
-
-### Successful Logon – Event ID 4624
-
-![4624 Success](screenshots/event_4624_success.png)
-
-### Successful Log Details
-
-![4624 Details](screenshots/event_4624_details.png)
+![Successful Logon](screenshots/event_id_4624.png)
 
 ---
 
-### 🧠 Analysis Summary
+## 🧠 Conclusion
 
-The screenshots confirm a brute force attack pattern:
+Brute force attack successfully detected by correlating failed and successful authentication events.
 
-- Multiple failed logins (Event ID 4625) from the same source IP
-- Followed by a successful login (Event ID 4624)
-- Logon Type 3 confirms remote network authentication (RDP)
+---
 
-This behavior is consistent with credential brute force attacks leading to account compromise.
+## 🚀 Key Takeaways
+
+- Repeated login failures are strong attack indicator  
+- Correlation between events is critical  
+- Authentication logs are key in detecting brute force attacks
+
