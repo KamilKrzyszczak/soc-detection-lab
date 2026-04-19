@@ -80,9 +80,9 @@ Reverse shell activity is identified when:
 - Destination: attacker machine  
 
 **Indicators:**
-- External connection  
-- Suspicious PowerShell flags  
-- Reverse shell payload  
+- Outbound connection initiated by PowerShell
+- Connection to uncommon port (e.g. 4444)
+- Suspicious parent-child process relationship
 
 **Outcome:**
 Remote command execution achieved  
