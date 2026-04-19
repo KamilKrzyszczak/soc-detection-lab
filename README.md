@@ -4,6 +4,12 @@ Hands-on cybersecurity project focused on detecting and analyzing real-world att
 
 ---
 
+## 💡 Why This Lab Matters
+
+This lab simulates real-world attack scenarios and demonstrates how a SOC analyst detects, analyzes, and responds to threats using log correlation and behavioral analysis.
+
+---
+
 ## 🎯 Objective
 
 Build a practical SOC environment to simulate real-world attacks and develop detection, investigation, and response capabilities similar to a Security Operations Center (SOC) analyst.
