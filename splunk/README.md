@@ -8,8 +8,6 @@ Detection of brute force attacks using Windows Event Logs and correlation logic 
 
 Build a centralized detection dashboard to identify brute force attacks based on Windows authentication logs and behavioral patterns.
 
-Zbudowanie dashboardu detekcyjnego do wykrywania brute force na podstawie logów uwierzytelniania Windows oraz analizy zachowań.
-
 ---
 
 ## 🧱 Data Sources
