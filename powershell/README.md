@@ -34,6 +34,7 @@ Detect execution of potentially malicious PowerShell commands indicating remote 
 - `IEX`
 - `DownloadString`
 - External URL
+- Encoded commands (-EncodedCommand)
 
 ---
 
