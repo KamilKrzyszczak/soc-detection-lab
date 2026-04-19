@@ -100,11 +100,11 @@ Remote command execution achieved
 
 ### Reverse Shell (Network)
 
-nc -lvnp 4444
+EventCode=3 AND DestinationPort=4444 AND Image="*powershell.exe"
 
 ### Suspicious PowerShell
 
-EventCode=4104 AND ("IEX" OR "TCPClient")
+EventCode=4104 AND ("IEX" OR "TCPClient" OR "DownloadString")
 
 ---
 
