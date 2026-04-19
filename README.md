@@ -82,22 +82,22 @@ Build a practical SOC environment to simulate real-world attacks and develop det
 
 ---
 
-4. Malware Analysis – Masquerading Process
+### 4. Malware Analysis – Masquerading Process
 
-Detection of a suspicious process mimicking a legitimate system binary.
+- Detection of a suspicious process mimicking a legitimate system binary.
 
-Detection using:
+**Detection using:**
 - Sysmon Event ID 1 (process creation)
 
-Indicators:
+**Indicators:**
 - Process name mimicking legitimate system process (e.g. svchost.exe)
 - Execution from unusual path (AppData / Temp)
 - Mismatch between process name and file location
 
-Analysis:
+**Analysis:**
 - Identification of suspicious process execution based on abnormal path and behavior
 
-Technique:
+**Technique:**
 - Masquerading (MITRE ATT&CK T1036)
 
 ---
