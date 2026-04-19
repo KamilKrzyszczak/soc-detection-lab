@@ -64,9 +64,10 @@ Brute force attack is identified when:
 - Attack type: RDP brute force
 
 **Indicators:**
-- Multiple failed logins  
-- Same username attempts  
-- Successful login after failures  
+- Multiple failed logins from same source IP  
+- High frequency of attempts
+- Multiple attempts targeting same account  
+- Sequential failed logins followed by a successful authentication  
 
 **Outcome:**
 Unauthorized access gained
