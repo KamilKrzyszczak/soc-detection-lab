@@ -55,6 +55,8 @@ Build a practical SOC environment to simulate real-world attacks and develop det
 
 ---
 
+### 3. Reverse Shell Attack
+
 - Outbound connection from victim to attacker  
 
 **Detection using:**
