@@ -125,11 +125,11 @@ Zbudowanie dashboardu detekcyjnego do wykrywania brute force na podstawie logów
 
 ## 📸 Visualization
 
+Splunk dashboard showing brute force detection and correlation logic:
+
 <p align="center">
   <img src="dashboards/dashboard.png" width="900">
 </p>
-
-See `dashboard.png` for full dashboard view.
 
 ---
 
