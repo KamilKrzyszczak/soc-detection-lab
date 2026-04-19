@@ -125,6 +125,10 @@ Zbudowanie dashboardu detekcyjnego do wykrywania brute force na podstawie logów
 
 ## 📸 Visualization
 
+<p align="center">
+  <img src="dashboards/dashboard.png" width="900">
+</p>
+
 See `dashboard.png` for full dashboard view.
 
 ---
