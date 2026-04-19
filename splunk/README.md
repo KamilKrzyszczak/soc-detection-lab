@@ -29,7 +29,7 @@ Build a centralized detection dashboard to identify brute force attacks based on
 ### 🔹 Correlation Logic
 
 * Source IP ↔ Target User
-* Failed logons ↔ Successful logon
+* Failed logons ↔ Successful logons
 * Time-based aggregation (spikes)
 
 ---
@@ -50,7 +50,7 @@ Build a centralized detection dashboard to identify brute force attacks based on
 
 ### 🔹 Brute Force Correlation (IP + User)
 
-* Core detection panel including:
+* Core detection panel including the following:
 
   * source IP
   * target account
@@ -140,7 +140,7 @@ The dashboard enables detection of brute force activity through:
 * time-based anomaly detection
 * severity classification
 
-Represents a practical SOC detection workflow using SIEM.
+Demonstrates a practical SOC detection workflow using SIEM.
 
 ---
 
@@ -156,6 +156,6 @@ Represents a practical SOC detection workflow using SIEM.
 
 ## 📌 Notes
 
-Most activity in the lab environment originates from local simulation (PowerShell), with additional remote attempts (Kali Linux) to emulate real-world attack behavior.
+Most activity in the lab environment originates from local simulations (PowerShell), with additional remote attempts (Kali Linux) to emulate real-world attack behavior.
 
 This reflects realistic limitations such as system throttling and connection constraints.
