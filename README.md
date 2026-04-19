@@ -116,6 +116,7 @@ EventCode=4104 AND ("IEX" OR "DownloadString")
 - Behavioral detection (beyond signature-based)  
 - Correlation of multiple events across different sources  
 - Identification of anomalies and attacker techniques
+- Focus on reducing false positives and identifying high-confidence alerts
 
 ---
 
@@ -128,6 +129,7 @@ EventCode=4104 AND ("IEX" OR "DownloadString")
 - Understanding attacker behavior (TTPs)  
 - Detection engineering fundamentals  
 - Basic threat hunting mindset
+- - Alert triage & prioritization
 
 ---
 
