@@ -1,0 +1,91 @@
+<!--
+SOC Detection Lab Dashboard
+Author: Kamil Krzyszczak
+Detects brute force attacks using Windows Event Logs (4625)
+Includes:
+- Top attacking IPs
+- Failed logins over time
+- Targeted accounts
+- Correlation (IP + User)
+-->
+
+<dashboard version="1.1" theme="dark">
+  <label>SOC Detection Lab</label>
+  <description>Detection of brute force attacks using Windows Event Detection of brute force attacks using Windows Event Logs and Splunk correlation.</description>
+  <row>
+    <panel>
+      <chart>
+        <title>Top Attacking IPs</title>
+        <search>
+          <query>index=windows EventCode=4625
+| stats count by Source_Network_Address
+| sort -count</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Failed Logins Over Time</title>
+        <search>
+          <query>index=windows EventCode=4625
+| timechart span=5m count</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <chart>
+        <title>Top Targeted Accounts</title>
+        <search>
+          <query>index=windows EventCode=4625
+| stats count by Account_Name
+| sort -count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Top Brute Force Combinations (IP + User)</title>
+        <search>
+          <query>index=windows EventCode=4625
+| eval src=coalesce(Source_Network_Address, IpAddress)
+| eval user=coalesce(Account_Name, TargetUserName)
+| where isnotnull(src) AND src!="::1" AND src!="127.0.0.1"
+| stats count as attempts by src, user
+| eval severity=case(
+    attempts&gt;=10, "HIGH",
+    attempts&gt;=5, "MEDIUM",
+    true(), "LOW"
+)
+| sort -attempts
+| head 10
+| rename src as "Source IP", user as "Target User"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>MITRE ATT&amp;CK Mapping</title>
