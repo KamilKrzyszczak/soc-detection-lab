@@ -1,0 +1,7 @@
+# Description: Detects most frequently targeted user accounts
+# Data Source: Windows Security Logs (EventCode 4625)
+# MITRE: T1110 - Brute Force
+
+index=windows EventCode=4625
+| stats count by Account_Name
+| sort -count
