@@ -1,0 +1,15 @@
+# Description: Correlates source IP and target account with severity scoring
+# Data Source: Windows Security Logs (EventCode 4625)
+# MITRE: T1110 - Brute Force
+
+index=windows EventCode=4625
+| eval src=coalesce(Source_Network_Address, IpAddress, WorkstationName)
+| eval user=coalesce(TargetUserName, Account_Name)
+| search NOT src IN ("-","::1")
+| stats count as attempts by src, user
+| eval severity=case(
+    attempts>=10,"HIGH",
+    attempts>=5,"MEDIUM",
+    true(),"LOW"
+)
+| sort -attempts
