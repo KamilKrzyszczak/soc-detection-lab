@@ -38,68 +38,80 @@ These observations helped validate the detection logic used in the dashboard.
 
 Shows which IP addresses generate the most failed login attempts.
 
-```spl
-index=windows EventCode=4625
-| stats count by Source_Network_Address
-| sort -count
-2. Failed Logins Over Time
+    index=windows EventCode=4625
+    | stats count by Source_Network_Address
+    | sort -count
+
+---
+
+### 2. Failed Logins Over Time
 
 Shows spikes in failed authentication attempts over time.
 
-index=windows EventCode=4625
-| timechart span=5m count
-3. Top Targeted Accounts
+    index=windows EventCode=4625
+    | timechart span=5m count
+
+---
+
+### 3. Top Targeted Accounts
 
 Identifies accounts that are most frequently targeted.
 
-index=windows EventCode=4625
-| stats count by Account_Name
-| sort -count
-4. Brute Force Correlation (IP + User)
+    index=windows EventCode=4625
+    | stats count by Account_Name
+    | sort -count
+
+---
+
+### 4. Brute Force Correlation (IP + User)
 
 Correlates source IP with targeted accounts and assigns severity based on number of attempts.
 
-index=windows EventCode=4625
-| eval src=coalesce(Source_Network_Address, IpAddress, WorkstationName)
-| eval user=coalesce(TargetUserName, Account_Name)
-| search NOT src IN ("-","::1")
-| stats count as attempts by src, user
-| eval severity=case(
-    attempts>=10,"HIGH",
-    attempts>=5,"MEDIUM",
-    true(),"LOW"
-)
-| sort -attempts
+    index=windows EventCode=4625
+    | eval src=coalesce(Source_Network_Address, IpAddress, WorkstationName)
+    | eval user=coalesce(TargetUserName, Account_Name)
+    | search NOT src IN ("-","::1")
+    | stats count as attempts by src, user
+    | eval severity=case(
+        attempts>=10,"HIGH",
+        attempts>=5,"MEDIUM",
+        true(),"LOW"
+    )
+    | sort -attempts
 
-Note:
+**Note:**  
 Thresholds (5 / 10 attempts) are example values and should be adjusted based on normal environment behavior.
 
-5. MITRE ATT&CK Mapping
+---
+
+### 5. MITRE ATT&CK Mapping
 
 Maps authentication activity to MITRE ATT&CK based on behavior patterns.
 
-index=windows (EventCode=4625 OR EventCode=4624)
-| eval MITRE_Technique=case(
-    EventCode=4625, "T1110 - Brute Force",
-    EventCode=4624, "T1078 - Valid Accounts"
-)
-| eval MITRE_Tactic=case(
-    EventCode=4625, "Credential Access",
-    EventCode=4624, "Initial Access"
-)
-| stats count as events by MITRE_Tactic, MITRE_Technique
-| sort -events
+    index=windows (EventCode=4625 OR EventCode=4624)
+    | eval MITRE_Technique=case(
+        EventCode=4625, "T1110 - Brute Force",
+        EventCode=4624, "T1078 - Valid Accounts"
+    )
+    | eval MITRE_Tactic=case(
+        EventCode=4625, "Credential Access",
+        EventCode=4624, "Initial Access"
+    )
+    | stats count as events by MITRE_Tactic, MITRE_Technique
+    | sort -events
 
-Note:
+**Note:**  
 This mapping is based on correlated behavior, not single events.
 
-🚀 Outcome
+---
+
+## 🚀 Outcome
 
 These queries demonstrate:
 
-Log analysis using Windows Security Logs
-Event correlation (IP + user + time)
-Detection of brute force patterns
-Basic threat classification
+- Log analysis using Windows Security Logs  
+- Event correlation (IP + user + time)  
+- Detection of brute force patterns  
+- Basic threat classification  
 
 They form the foundation of a SOC-style detection workflow in Splunk.
