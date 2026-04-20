@@ -1,0 +1,15 @@
+# Description: Maps authentication events to MITRE ATT&CK techniques
+# Data Source: Windows Security Logs (EventCode 4625, 4624)
+# MITRE: T1110 - Brute Force, T1078 - Valid Accounts
+
+index=windows (EventCode=4625 OR EventCode=4624)
+| eval MITRE_Technique=case(
+    EventCode=4625, "T1110 - Brute Force",
+    EventCode=4624, "T1078 - Valid Accounts"
+)
+| eval MITRE_Tactic=case(
+    EventCode=4625, "Credential Access",
+    EventCode=4624, "Initial Access"
+)
+| stats count as events by MITRE_Tactic, MITRE_Technique
+| sort -events
