@@ -41,7 +41,7 @@ Based on the analysis of authentication logs:
 - Multiple failed login attempts were observed from the same source IP  
 - High frequency of EventCode 4625 indicates brute force behavior  
 - Specific accounts were repeatedly targeted  
-- Correlation between IP and user highlights attack patterns  
+- Correlation between IP and user highlights attack patterns 
 
 These indicators suggest an active brute force attack attempt.
 
@@ -72,7 +72,7 @@ These indicators suggest an active brute force attack attempt.
 
 ### 🔹 MITRE ATT&CK Mapping
 
-Mapping is based on correlated behavior patterns, not single events.
+Mapping is based on correlated behavior patterns rather than single events, reflecting real-world detection logic used in SOC environments.
 
 * **T1110** – Brute Force
 * **T1078** – Valid Accounts
