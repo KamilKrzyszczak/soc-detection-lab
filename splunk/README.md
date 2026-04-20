@@ -34,6 +34,19 @@ Build a centralized detection dashboard to identify brute force attacks based on
 
 ---
 
+## 🔍 Investigation Insights
+
+Based on the analysis of authentication logs:
+
+- Multiple failed login attempts were observed from the same source IP  
+- High frequency of EventCode 4625 indicates brute force behavior  
+- Specific accounts were repeatedly targeted  
+- Correlation between IP and user highlights attack patterns  
+
+These indicators suggest an active brute force attack attempt.
+
+---
+
 ## 📊 Dashboard Panels
 
 ### 🔹 Top Attacking IPs
@@ -59,8 +72,24 @@ Build a centralized detection dashboard to identify brute force attacks based on
 
 ### 🔹 MITRE ATT&CK Mapping
 
+Mapping is based on correlated behavior patterns, not single events.
+
 * **T1110** – Brute Force
 * **T1078** – Valid Accounts
+
+---
+
+## 🔎 Detection Queries (Example)
+
+Example brute force detection query:
+
+
+index=windows EventCode=4625
+| stats count by Source_Network_Address
+| sort -count
+
+
+👉 Full query set available in `queries/` folder.
 
 ---
 
