@@ -1,0 +1,6 @@
+# Description: Identifies spikes in failed login attempts over time
+# Data Source: Windows Security Logs (EventCode 4625)
+# MITRE: T1110 - Brute Force
+
+index=windows EventCode=4625
+| timechart span=5m count
