@@ -1,0 +1,7 @@
+# Description: Detects top source IPs generating failed login attempts
+# Data Source: Windows Security Logs (EventCode 4625)
+# MITRE: T1110 - Brute Force
+
+index=windows EventCode=4625
+| stats count by Source_Network_Address
+| sort -count

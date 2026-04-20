@@ -1,3 +1,0 @@
-index=windows EventCode=4625
-| stats count by Source_Network_Address
-| sort -count
