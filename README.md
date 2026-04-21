@@ -91,7 +91,7 @@ Build a practical SOC environment to simulate real-world attacks and develop det
 
 ---
 
-### 4. Malware Analysis – Masquerading Process
+### 4. Malware Analysis – Masquerading Process (in progress)
 
 * Detection of a suspicious process mimicking a legitimate system binary
 
