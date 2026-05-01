@@ -1,6 +1,6 @@
 # 🔐 SOC Detection Lab
 
-Hands-on cybersecurity project focused on detecting and analyzing real-world attack scenarios using Windows Event Logs, Sysmon, and SIEM tools (Splunk).
+Hands-on SOC lab focused on detecting and correlating multi-stage attack scenarios using Windows logs, Sysmon, and Splunk.
 
 ---
 
@@ -91,7 +91,7 @@ Build a practical SOC environment to simulate real-world attacks and develop det
 
 ---
 
-### 4. Malware Analysis – Masquerading Process (in progress)
+### 4. Malware Attack – Masquerading + Persistence + Network Activity (in progress)
 
 * Detection of a suspicious process mimicking a legitimate system binary
 
