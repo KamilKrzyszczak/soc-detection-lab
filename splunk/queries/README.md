@@ -1,4 +1,4 @@
-# 🔎 Splunk Detection Queries
+# Splunk Detection Queries
 
 Collection of SPL queries used to detect brute force activity based on Windows Security Event Logs.
 
@@ -6,13 +6,13 @@ These queries were used to build the detection logic behind the Splunk dashboard
 
 ---
 
-## 🎯 Objective
+## Objective
 
 Provide practical detection queries for identifying brute force attacks and suspicious authentication behavior.
 
 ---
 
-## 📊 Data Source
+## Data Source
 
 - Windows Event Logs (Security)
 - Event ID 4625 – Failed Logon
@@ -20,7 +20,7 @@ Provide practical detection queries for identifying brute force attacks and susp
 
 ---
 
-## 🧪 Observations
+## Observations
 
 During testing:
 
@@ -32,7 +32,7 @@ These observations helped validate the detection logic used in the dashboard.
 
 ---
 
-## 📁 Queries
+## Queries
 
 ### 1. Top Attacking IPs
 
@@ -105,7 +105,7 @@ This mapping is based on correlated behavior, not single events.
 
 ---
 
-## 🚀 Outcome
+## Outcome
 
 These queries demonstrate:
 

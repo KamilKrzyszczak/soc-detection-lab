@@ -1,16 +1,16 @@
-# 🔐 Brute Force Attack Detection
+# Brute Force Attack Detection
 
 Detection of brute force attack attempts against RDP using Windows Security Logs and log correlation.
 
 ---
 
-## 🎯 Objective
+## Objective
 
 Simulate a brute force attack on RDP and detect it using failed and successful authentication events.
 
 ---
 
-## ⚔️ Attack Simulation
+## Attack Simulation
 
 - Tool: Hydra
 - Attacker: Kali Linux
@@ -24,7 +24,7 @@ Simulate a brute force attack on RDP and detect it using failed and successful a
 
 ---
 
-## 📊 Logs Analysis
+## Logs Analysis
 
 ### Windows Security Event ID 4625 – Failed Logon
 
@@ -47,7 +47,7 @@ Possible account compromise after brute force
 
 ---
 
-## 🚨 Detection Logic
+## Detection Logic
 
 Brute force attack is identified when:
 
@@ -57,7 +57,7 @@ Brute force attack is identified when:
 
 ---
 
-## 🔎 Investigation Findings
+## Investigation Findings
 
 - Source IP: 192.168.56.101 (Kali)
 - Target account: labuser
@@ -74,13 +74,13 @@ Unauthorized access gained
 
 ---
 
-## 🧬 MITRE ATT&CK Mapping
+## MITRE ATT&CK Mapping
 
 - **T1110** – Brute Force  
 
 ---
 
-## 🔎 Detection Queries (Splunk)
+## Detection Queries (Splunk)
 
 ### Failed Logons
 
@@ -92,7 +92,7 @@ EventCode=4624
 
 ---
 
-## 📸 Evidence
+## Evidence
 
 ### Brute Force Attack (Hydra)
 ![Brute Force](screenshots/hydra_attack.png)
@@ -111,13 +111,13 @@ EventCode=4624
 
 ---
 
-## 🧠 Conclusion
+## Conclusion
 
 Brute force attack successfully detected by correlating failed and successful authentication events.
 
 ---
 
-## 🚀 Key Takeaways
+## Key Takeaways
 
 - Repeated login failures are strong attack indicator  
 - Correlation between events is critical  

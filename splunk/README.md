@@ -1,16 +1,16 @@
-# 📊 Splunk Detection Dashboard
+# Splunk Detection Dashboard
 
 Detection of brute force attacks using Windows Event Logs and correlation logic in Splunk.
 
 ---
 
-## 🎯 Objective
+## Objective
 
 Build a centralized detection dashboard to identify brute force attacks based on Windows authentication logs and behavioral patterns.
 
 ---
 
-## 🧱 Data Sources
+## Data Sources
 
 * Windows Event Logs (Security)
 * Event ID 4625 – Failed Logon
@@ -18,15 +18,15 @@ Build a centralized detection dashboard to identify brute force attacks based on
 
 ---
 
-## ⚙️ Detection Scope
+## Detection Scope
 
-### 🔹 Brute Force Detection
+### Brute Force Detection
 
 * Multiple failed login attempts (Event ID 4625)
 * Repeated attempts from same source
 * Targeting specific accounts
 
-### 🔹 Correlation Logic
+### Correlation Logic
 
 * Source IP ↔ Target User
 * Failed logons ↔ Successful logons
@@ -34,7 +34,7 @@ Build a centralized detection dashboard to identify brute force attacks based on
 
 ---
 
-## 🔍 Investigation Insights
+## Investigation Insights
 
 Based on the analysis of authentication logs:
 
@@ -47,21 +47,21 @@ These indicators suggest an active brute force attack attempt.
 
 ---
 
-## 📊 Dashboard Panels
+## Dashboard Panels
 
-### 🔹 Top Attacking IPs
+### Top Attacking IPs
 
 * Identifies most active sources generating failed logins
 
-### 🔹 Failed Logins Over Time
+### Failed Logins Over Time
 
 * Visualizes spikes in authentication failures
 
-### 🔹 Top Targeted Accounts
+### Top Targeted Accounts
 
 * Highlights most frequently attacked users
 
-### 🔹 Brute Force Correlation (IP + User)
+### Brute Force Correlation (IP + User)
 
 * Core detection panel including the following:
 
@@ -70,7 +70,7 @@ These indicators suggest an active brute force attack attempt.
   * number of attempts
   * severity level
 
-### 🔹 MITRE ATT&CK Mapping
+### MITRE ATT&CK Mapping
 
 Mapping is based on correlated behavior patterns rather than single events, reflecting real-world detection logic used in SOC environments.
 
@@ -79,7 +79,7 @@ Mapping is based on correlated behavior patterns rather than single events, refl
 
 ---
 
-## 🔎 Detection Queries (Example)
+## Detection Queries (Example)
 
 Example brute force detection query:
 
@@ -93,9 +93,9 @@ index=windows EventCode=4625
 
 ---
 
-## 🧠 Detection Logic
+## Detection Logic
 
-### 🔹 Field Normalization
+### Field Normalization
 
 * `Source_Network_Address`
 * `IpAddress`
@@ -107,7 +107,7 @@ index=windows EventCode=4625
 
 ---
 
-### 🔹 User Normalization
+### User Normalization
 
 * `TargetUserName`
 * `Account_Name`
@@ -118,7 +118,7 @@ index=windows EventCode=4625
 
 ---
 
-### 🔹 Noise Filtering
+### Noise Filtering
 
 * Excluding localhost traffic:
 
@@ -128,7 +128,7 @@ index=windows EventCode=4625
 
 ---
 
-### 🔹 Severity Scoring
+### Severity Scoring
 
 ```spl
 | eval severity=case(
@@ -140,7 +140,7 @@ index=windows EventCode=4625
 
 ---
 
-## 🔍 Detection Approach
+## Detection Approach
 
 * Log analysis (Windows Security Logs)
 * SIEM correlation (Splunk)
@@ -150,7 +150,7 @@ index=windows EventCode=4625
 
 ---
 
-## 📸 Visualization
+## Visualization
 
 Splunk dashboard showing brute force detection and correlation logic:
 
@@ -160,7 +160,7 @@ Splunk dashboard showing brute force detection and correlation logic:
 
 ---
 
-## 🚀 Outcome
+## Outcome
 
 The dashboard enables detection of brute force activity through:
 
@@ -173,7 +173,7 @@ Demonstrates a practical SOC detection workflow using SIEM.
 
 ---
 
-## 🧩 Skills Demonstrated
+## Skills Demonstrated
 
 * SIEM (Splunk)
 * Log analysis & event correlation
@@ -183,7 +183,7 @@ Demonstrates a practical SOC detection workflow using SIEM.
 
 ---
 
-## 📌 Notes
+## Notes
 
 Most activity in the lab environment originates from local simulations (PowerShell), with additional remote attempts (Kali Linux) to emulate real-world attack behavior.
 

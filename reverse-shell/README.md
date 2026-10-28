@@ -1,16 +1,16 @@
-# 🔌 Reverse Shell Detection
+# Reverse Shell Detection
 
 Detection of reverse shell activity using PowerShell, Sysmon, and network correlation.
 
 ---
 
-## 🎯 Objective
+## Objective
 
 Simulate a reverse shell connection from a compromised Windows machine to an attacker and detect it using system logs.
 
 ---
 
-## ⚔️ Attack Simulation
+## Attack Simulation
 
 - Tool: PowerShell
 - Attacker: Kali Linux
@@ -25,7 +25,7 @@ Simulate a reverse shell connection from a compromised Windows machine to an att
 
 ---
 
-## 📊 Logs Analysis
+## Logs Analysis
 
 ### Sysmon Event ID 1 – Process Creation
 
@@ -61,7 +61,7 @@ Outbound connection to uncommon port from PowerShell
 
 ---
 
-## 🚨 Detection Logic
+## Detection Logic
 
 Reverse shell activity is identified when:
 
@@ -73,7 +73,7 @@ Reverse shell activity is identified when:
 
 ---
 
-## 🔎 Investigation Findings
+## Investigation Findings
 
 - User: labuser  
 - Process: powershell.exe  
@@ -89,14 +89,14 @@ Remote command execution achieved
 
 ---
 
-## 🧬 MITRE ATT&CK Mapping
+## MITRE ATT&CK Mapping
 
 - **T1059.001** – PowerShell  
 - **T1071** – Application Layer Protocol (C2 communication)  
 
 ---
 
-## 🔎 Detection Queries (Splunk)
+## Detection Queries (Splunk)
 
 ### Reverse Shell (Network)
 
@@ -108,7 +108,7 @@ EventCode=4104 AND ("IEX" OR "TCPClient" OR "DownloadString")
 
 ---
 
-## 📸 Evidence
+## Evidence
 
 ### Reverse Shell Connection
 ![Reverse Shell](screenshots/reverse_shell_connection.png)
@@ -124,13 +124,13 @@ EventCode=4104 AND ("IEX" OR "TCPClient" OR "DownloadString")
 
 ---
 
-## 🧠 Conclusion
+## Conclusion
 
 Reverse shell activity successfully detected through correlation of process execution and network behavior.
 
 ---
 
-## 🚀 Key Takeaways
+## Key Takeaways
 
 - Reverse shells create detectable outbound connections  
 - Correlation between logs is critical  

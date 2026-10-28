@@ -1,245 +1,83 @@
-# 🔐 SOC Detection Lab
+# SOC Detection Lab
 
-Hands-on SOC lab focused on detecting and correlating multi-stage attack scenarios using Windows logs, Sysmon, and Splunk.
+Hands-on SOC lab for detecting and correlating multi-stage attacks using
+Windows Event Logs, Sysmon and Splunk.
 
----
+## Overview
 
-## 💡 Why This Lab Matters
+A practical SOC environment used to simulate real-world attacks and build
+detection, investigation and response skills: log analysis, event
+correlation, SIEM dashboards and MITRE ATT&CK mapping.
 
-This lab simulates real-world attack scenarios and demonstrates how a SOC analyst detects, analyzes, and responds to threats using log correlation and behavioral analysis.
+## Lab environment
 
----
+- Windows (victim, with Sysmon)
+- Kali Linux (attacker)
+- Sysmon (endpoint telemetry)
+- Splunk (SIEM)
+- VirtualBox
 
-## 🎯 Objective
+## Repository structure
 
-Build a practical SOC environment to simulate real-world attacks and develop detection, investigation, and response capabilities similar to a Security Operations Center (SOC) analyst.
+```
+soc-detection-lab/
+├── brute-force/      # RDP brute force detection (4625 → 4624)
+├── powershell/       # Suspicious PowerShell (Script Block Logging 4104)
+├── reverse-shell/    # Reverse shell detection (Sysmon 1 + 3)
+└── splunk/
+    ├── dashboards/   # Dashboard XML + screenshot
+    └── queries/      # SPL detection queries
+```
 
----
+## Attack scenarios
 
-## 🧱 Lab Environment
+| # | Scenario | Key events | MITRE ATT&CK | Status |
+|---|----------|-----------|--------------|--------|
+| 1 | Brute force (RDP) | 4625, 4624 | T1110, T1078 | Done |
+| 2 | Suspicious PowerShell | 4104, Sysmon 1 | T1059.001 | Done |
+| 3 | Reverse shell | Sysmon 1, Sysmon 3, 4104 | T1059.001, T1071 | Done |
+| 4 | Masquerading | Sysmon 1 | T1036 | In progress |
 
-* Windows (victim machine with Sysmon)
-* Kali Linux (attacker machine)
-* Sysmon (enhanced endpoint visibility)
-* Splunk (SIEM for log analysis and correlation)
-* VirtualBox (lab environment)
+Each scenario has its own folder with attack steps, log analysis, detection
+logic, investigation findings and screenshots.
 
----
+## Splunk detection dashboard
 
-## 💣 Attack Scenarios
+A Splunk dashboard built on Windows authentication logs:
 
-### 1. Brute Force Attack
+- Failed logins aggregated by source IP (4625)
+- Source IP ↔ targeted account correlation
+- Time-based attack-spike charts
+- Severity scoring (LOW / MEDIUM / HIGH)
+- MITRE ATT&CK mapping (T1110, T1078)
 
-* RDP login attempts from Kali Linux
-* Multiple failed login attempts (brute force pattern)
+See `splunk/dashboards/dashboard.png` and `splunk/queries/` for details.
 
-**Detection using:**
-
-* Event ID 4625 (failed logon)
-* Event ID 4624 (successful logon)
-
-**Analysis:**
-
-* Correlation of failed and successful authentication events
-* Identification of potential account compromise
-
----
-
-### 2. Suspicious PowerShell Activity
-
-* Execution of potentially malicious PowerShell commands
-
-**Detection using:**
-
-* Script Block Logging (Event ID 4104)
-
-**Indicators:**
-
-* Use of `IEX (Invoke-Expression)`
-* Use of `DownloadString`
-* External URL references
-* Obfuscation flags (e.g. `-enc`, `-nop`)
-
-**Analysis:**
-
-* Visibility into command execution and script content
-
----
-
-### 3. Reverse Shell Attack
-
-* Outbound connection from victim to attacker
-
-**Detection using:**
-
-* Sysmon Event ID 3 (network connection)
-* Sysmon Event ID 1 (process creation)
-
-**Indicators:**
-
-* PowerShell spawning outbound connection
-* Unusual destination IP and port
-* Suspicious command-line execution
-
-**Analysis:**
-
-* Correlation between process activity and network behavior
-
-**Technique:**
-
-* Command and Control (C2)
-
----
-
-### 4. Malware Attack – Masquerading + Persistence + Network Activity (in progress)
-
-* Detection of a suspicious process mimicking a legitimate system binary
-
-**Detection using:**
-
-* Sysmon Event ID 1 (process creation)
-
-**Indicators:**
-
-* Process name mimicking a legitimate system process (e.g. `svchost.exe`)
-* Execution from unusual paths (`AppData`, `Temp`)
-* Mismatch between process name and file location
-
-**Analysis:**
-
-* Identification of suspicious process execution based on abnormal path and behavior
-
-**Technique:**
-
-* Masquerading (MITRE ATT&CK T1036)
-
----
-
-## 📊 Splunk Detection Dashboard
-
-A custom SIEM dashboard was built in Splunk to detect brute force attacks using Windows Event Logs.
-
-**Features:**
-
-* Aggregation of failed login attempts (Event ID 4625)
-* Correlation between source IP and targeted accounts
-* Time-based visualization of attack spikes
-* Severity scoring (LOW / MEDIUM / HIGH)
-* MITRE ATT&CK mapping (T1110, T1078)
-
-The dashboard provides a centralized view of attack activity and simulates a real-world SOC monitoring workflow.
-
-📸 See `splunk/dashboards/dashboard.png` for the full dashboard view.
-
----
-
-## 🔎 Detection Rules (Examples)
-
-### Brute Force (Splunk)
+## Example detection query (brute force)
 
 ```spl
 index=windows EventCode=4625
-| stats count by Account_Name, src_ip
-| where count > 5
+| eval src=coalesce(Source_Network_Address, IpAddress, WorkstationName)
+| eval user=coalesce(TargetUserName, Account_Name)
+| search NOT src IN ("-","::1")
+| stats count as attempts by src, user
+| eval severity=case(attempts>=10,"HIGH", attempts>=5,"MEDIUM", true(),"LOW")
+| sort -attempts
 ```
 
-### Reverse Shell (Sysmon)
+## Skills demonstrated
 
-```text
-EventCode=3 AND DestinationPort=4444
-```
+Log analysis · event correlation · endpoint telemetry (Sysmon) · SIEM
+(Splunk) · detection engineering fundamentals · alert triage · MITRE
+ATT&CK mapping
 
-### Suspicious PowerShell
+## Roadmap
 
-```text
-EventCode=4104 AND ("IEX" OR "DownloadString")
-```
+- Finish scenario 4 (masquerading / persistence detection)
+- Add persistence detections (Scheduled Tasks, Run keys, Sysmon 13)
+- Multi-stage correlation (PowerShell → reverse shell → persistence)
+- Expand the environment (more endpoints, Wazuh integration)
 
----
+## Status
 
-## 🧠 Detection Approach
-
-* Log analysis (Windows Event Logs, Sysmon)
-* SIEM correlation (Splunk)
-* Behavioral detection (beyond signature-based)
-* Correlation of multiple events across different sources
-* Identification of anomalies and attacker techniques
-* Focus on reducing false positives and identifying high-confidence alerts
-
----
-
-## 📊 Skills Demonstrated
-
-* Log analysis & threat detection
-* Incident investigation & triage
-* Endpoint telemetry analysis (Sysmon)
-* SIEM usage (Splunk)
-* Understanding attacker behavior (TTPs)
-* Detection engineering fundamentals
-* Basic threat hunting mindset
-* Alert triage & prioritization
-
----
-
-## 🚀 Future Improvements
-
-### 🛡️ Detection Engineering
-
-* Develop custom detection rules (Sigma / Splunk queries)
-* Improve alert logic to reduce false positives
-* Correlate multi-stage attacks (e.g. PowerShell → reverse shell → persistence)
-
-### 🔄 Persistence Techniques
-
-* Simulate attacker persistence:
-
-  * Scheduled Tasks
-  * Registry Run Keys
-  * Startup folder
-
-* Detect persistence using:
-
-  * Sysmon Event ID 1 (process creation)
-  * Sysmon Event ID 13 (registry changes)
-
-### 🧠 Advanced PowerShell Detection
-
-* Analyze encoded and obfuscated commands (`-EncodedCommand`)
-* Detect fileless attacks using Event ID 4104
-* Identify suspicious parent-child relationships
-
-### 🌐 SIEM & Automation
-
-* Build dashboards in Splunk
-
-* Create alerts for:
-
-  * Brute force attempts
-  * Reverse shell connections
-  * Suspicious PowerShell activity
-
-* Automate log correlation and alerting workflows
-
-### 🧪 Additional Attack Scenarios
-
-* Persistence & privilege escalation
-* Basic lateral movement simulation
-* Data exfiltration scenarios
-
-### 📄 Incident Response
-
-* Create full incident reports (PDF format)
-* Document attack timeline and analysis
-* Map techniques to MITRE ATT&CK
-
-### 📈 Lab Expansion
-
-* Integrate Wazuh
-* Add more endpoints (multi-host environment)
-* Simulate enterprise-like network
-
----
-
-## 🛠️ Status
-
-🛠️ In progress — continuously expanding detection scenarios and improving analysis based on real-world attack techniques.
+In progress — continuously adding detection scenarios and refining analysis.
